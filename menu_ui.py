@@ -74,14 +74,10 @@ def load_menu_assets(root, canvas, do_dai):
 def draw_scoreboard(anchor_x=40, anchor_y=40):
     """Vẽ Scoreboard (Current Score & High Score) lên góc trên bên trái."""
     canvas = game_state.canvas
-    W = game_state.WIDTH
-    H = game_state.HEIGHT
 
     # Cập nhật High Score
     if game_state.SCORE > game_state.HIGH_SCORE:
         game_state.HIGH_SCORE = game_state.SCORE
-
-    # Vị trí cho Scoreboard (cố định ở góc trái trên)
 
     # --- Hiển thị Current Score (Apple) ---
     canvas.create_image(
@@ -115,13 +111,13 @@ def draw_scoreboard(anchor_x=40, anchor_y=40):
         tags="score_display"
     )
 
+
 def animation_button(tag_name, index=0):
     canvas = game_state.canvas
 
     if canvas.find_withtag("menu"):
         canvas.itemconfig(tag_name, image=frames[index])
         next_index = (index + 1) % len(frames)
-        # Lặp lại animation sau 150ms
         canvas.after(150, animation_button, tag_name, next_index)
 
 
@@ -131,7 +127,8 @@ def draw_menu():
     W = game_state.WIDTH
     H = game_state.HEIGHT
 
-    ground.ground(canvas, W, H, game_state.do_dai, game_state.do_dai * 2, W - game_state.do_dai, H - game_state.do_dai,
+    ground.ground(canvas, W, H, game_state.do_dai, game_state.do_dai * 2,
+                  W - game_state.do_dai, H - game_state.do_dai,
                   game_state.do_dai, "#AAD751", "#A2D149")
 
     # Background mờ
@@ -140,10 +137,9 @@ def draw_menu():
     # Logo/Tiêu đề
     canvas.create_image(W / 2, H / 2 - 40, image=menu1_img, tags="menu")
 
-    #Nút Start
+    # Nút Start
     button_x = W / 2
     button_y = H / 2 + 240
-
     canvas.button_image_ref = frames[0]
 
     canvas.create_image(
@@ -164,15 +160,14 @@ def on_click_button_start(event):
     print("Bắt đầu trò chơi...")
     canvas.delete("menu")  # Xóa toàn bộ menu
 
-    # Lấy cửa sổ gốc
-    root = canvas.winfo_toplevel()
-
+    # ✅ Start game
     game_controller.start_game()
-    game_state.start_game = True
 
+    # ✅ Bind phím vào canvas (chỉ một lần)
     if not keys_bound:
-        movement.bind_keys(root)
+        movement.bind_keys(canvas)
         keys_bound = True
+
 
 def game_over_screen():
     """Hiển thị màn hình Game Over và gọi lại Menu"""
@@ -183,7 +178,6 @@ def game_over_screen():
     # Cập nhật High Score
     if game_state.SCORE > game_state.HIGH_SCORE:
         game_state.HIGH_SCORE = game_state.SCORE
-        # lưu high score vào file
     try:
         with open('highscore.txt', 'w') as file:
             file.write(str(game_state.HIGH_SCORE))
@@ -193,9 +187,13 @@ def game_over_screen():
     global keys_bound
     keys_bound = False
 
+    # ✅ Reset trạng thái game
+    game_state.GAME_STARTED = False
+
     # Xóa tất cả và vẽ lại nền
     canvas.delete("all")
-    ground.ground(canvas, W, H, game_state.do_dai, game_state.do_dai * 2, W - game_state.do_dai, H - game_state.do_dai,
+    ground.ground(canvas, W, H, game_state.do_dai, game_state.do_dai * 2,
+                  W - game_state.do_dai, H - game_state.do_dai,
                   game_state.do_dai, "#AAD751", "#A2D149")
     draw_menu()
     draw_scoreboard(310, 160)

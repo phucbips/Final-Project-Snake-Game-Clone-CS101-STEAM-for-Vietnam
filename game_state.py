@@ -1,7 +1,5 @@
-# game_state.py
-
 from tkinter import Canvas
-import character # Import để dùng class Image
+import character  # Import để dùng class Image
 
 # Biến config (sẽ được gán giá trị từ main.py)
 WIDTH: int = 0
@@ -31,3 +29,6 @@ GAME_OVER = False
 GAME_PAUSED = True
 
 Pos_apple = []
+
+# Trạng thái game đã start chưa
+GAME_STARTED = False

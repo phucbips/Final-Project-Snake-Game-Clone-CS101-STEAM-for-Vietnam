@@ -1,4 +1,5 @@
-# main.py (Hoàn chỉnh)
+# main.py
+
 from tkinter import *
 import ground
 import movement
@@ -31,6 +32,10 @@ game_state.canvas = canvas
 # 1. Vẽ nền lưới 
 # Vùng chơi:
 game_state.Pos_apple=ground.ground(canvas, WIDTH, HEIGHT, do_dai, do_dai*2, WIDTH-do_dai, HEIGHT-do_dai, do_dai, "#AAD751", "#A2D149")
+
+# [THAY ĐỔI] Gán phím điều khiển ngay từ đầu (nhưng logic sẽ chặn nó hoạt động)
+movement.bind_keys(root)
+menu_ui.keys_bound = True # Đặt True để menu_ui không gán lại
 
 # 2. Load tất cả ảnh (Skins, Menu, Buttons)
 menu_ui.load_menu_assets(root, canvas, do_dai)

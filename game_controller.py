@@ -16,33 +16,25 @@ def spawn_food(random_spawn=True):
         random_spawn = True
 
     if random_spawn:
-        # Logic cho vị trí ngẫu nhiên
         while True:
-            fx,fy=random.choice(game_state.Pos_apple)
-            new_food_coord = (fx/do_dai, fy/do_dai)
+            fx, fy = random.choice(game_state.Pos_apple)
+            new_food_coord = (fx / do_dai, fy / do_dai)
             if new_food_coord not in game_state.snake_coords:
                 break
     else:
-
         head_x, head_y = game_state.snake_coords[0]
         if head_x + 4 < grid_width:
             fx, fy = head_x + 4, head_y
         elif head_x - 4 >= 0:
             fx, fy = head_x - 4, head_y
-
         new_food_coord = (fx, fy)
 
-    # Xoá food cũ
     if game_state.food_item:
         canvas.delete(game_state.food_item)
 
-    # Lưu tọa độ logic của food
     game_state.food_coord = new_food_coord
-
-    # Chuyển đổi tọa độ logic
     fx_pixel, fy_pixel = new_food_coord[0] * do_dai, new_food_coord[1] * do_dai
 
-    # Vẽ food mới
     game_state.food_item = canvas.create_image(
         fx_pixel, fy_pixel,
         image=menu_ui.apple_img,
@@ -52,7 +44,6 @@ def spawn_food(random_spawn=True):
 
 
 def check_eat_food():
-    """Kiểm tra xem đầu rắn có trùng với tọa độ food không."""
     if not game_state.snake_coords or not game_state.food_coord:
         return False
     return game_state.snake_coords[0] == game_state.food_coord
@@ -76,7 +67,6 @@ def game_loop():
         if grow:
             game_state.SCORE += 1
             update_score()
-            # Spawn táo
             spawn_food(random_spawn=True)
 
         move_success = movement.move_snake(character.skins["main"], grow=grow)
@@ -92,26 +82,30 @@ def game_loop():
 
 def start_game():
     canvas = game_state.canvas
-    #xóa menu cũ
     canvas.delete("menu")
 
-    # Thiết lập trạng thái game
+    # ✅ Đảm bảo canvas nhận bàn phím
+    canvas.focus_set()
+
+    # ✅ Game bắt đầu
+    game_state.GAME_STARTED = True
+
     movement.current_dir = "right"
     game_state.SCORE = 0
     game_state.GAME_OVER = False
     game_state.GAME_PAUSED = True
     game_state.snake_parts = []
 
-    # 1. Khởi tạo rắn
+    # Spawn rắn
     start_x, start_y = 6, 9
     game_state.snake_coords = character.spawn_snake(start_x, start_y, length=3, direction=movement.current_dir)
     movement._redraw_snake(character.skins["main"])
 
-    # 2. Spawn food lần đầu
+    # Spawn food đầu tiên
     spawn_food(random_spawn=False)
 
-    # 3. Vẽ Scoreboard
+    # Scoreboard
     update_score()
 
-    # 4. Bắt đầu game loop
+    # Bắt đầu game loop
     game_loop()

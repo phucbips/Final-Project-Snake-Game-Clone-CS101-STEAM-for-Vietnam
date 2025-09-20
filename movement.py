@@ -1,7 +1,5 @@
-from turtledemo.penrose import start
 import character
 import game_state
-import movement
 import config
 
 # Hướng: (dx, dy)
@@ -16,6 +14,10 @@ current_dir = "right"  # hướng ban đầu
 
 def set_direction(new_dir):
     global current_dir
+    # ❌ Nếu chưa start game thì không đổi hướng
+    if not game_state.GAME_STARTED:
+        return
+
     if not game_state.DIRECTION_LOCKED:
         dx, dy = directions[current_dir]
         ndx, ndy = directions[new_dir]
@@ -27,17 +29,16 @@ def set_direction(new_dir):
                 game_state.GAME_PAUSED = False
 
 
-def bind_keys(root):
-    """Gán phím điều khiển."""
-
-    root.bind("<Up>", lambda e: set_direction("up"))
-    root.bind("<Down>", lambda e: set_direction("down"))
-    root.bind("<Left>", lambda e: set_direction("left"))
-    root.bind("<Right>", lambda e: set_direction("right"))
-    root.bind("w", lambda e: set_direction("up"))
-    root.bind("s", lambda e: set_direction("down"))
-    root.bind("a", lambda e: set_direction("left"))
-    root.bind("d", lambda e: set_direction("right"))
+def bind_keys(canvas):
+    """Gán phím điều khiển trực tiếp cho canvas."""
+    canvas.bind("<Up>", lambda e: set_direction("up"))
+    canvas.bind("<Down>", lambda e: set_direction("down"))
+    canvas.bind("<Left>", lambda e: set_direction("left"))
+    canvas.bind("<Right>", lambda e: set_direction("right"))
+    canvas.bind("w", lambda e: set_direction("up"))
+    canvas.bind("s", lambda e: set_direction("down"))
+    canvas.bind("a", lambda e: set_direction("left"))
+    canvas.bind("d", lambda e: set_direction("right"))
 
 
 def _get_direction(p1, p2):
@@ -77,30 +78,22 @@ def _redraw_snake(skin):
             prev = snake_coords[i - 1]
             nxt = snake_coords[i + 1]
 
-            # Trường hợp thẳng: Thân dọc
+            # Trường hợp thẳng
             if prev[0] == nxt[0]:
                 img_pil = skin["body"]["vertical"]
             elif prev[1] == nxt[1]:
                 img_pil = skin["body"]["horizontal"]
-
-            # Trường hợp cong (góc)
             else:
-
-                # TopLeft: prev/nxt ở (trái, trên)
                 if ((prev[0] < x and nxt[1] < y) or (nxt[0] < x and prev[1] < y)):
                     key = "topleft"
-                # BottomLeft: prev/nxt ở (trái, dưới)
                 elif ((prev[0] < x and nxt[1] > y) or (nxt[0] < x and prev[1] > y)):
                     key = "bottomleft"
-                # TopRight: prev/nxt ở (phải, trên)
                 elif ((prev[0] > x and nxt[1] < y) or (nxt[0] > x and prev[1] < y)):
                     key = "topright"
-                # BottomRight: prev/nxt ở (phải, dưới)
                 elif ((prev[0] > x and nxt[1] > y) or (nxt[0] > x and prev[1] > y)):
                     key = "bottomright"
                 else:
                     key = "horizontal"
-
                 img_pil = skin["body"][key]
 
         img = character.get_photoimage(img_pil.resize((do_dai, do_dai)))
@@ -128,15 +121,15 @@ def move_snake(skin, grow=False):
     grid_width = game_state.WIDTH // do_dai
     grid_height = game_state.HEIGHT // do_dai
 
-    # Ranh giới của sân chơi
+    # Ranh giới sân chơi
     min_x = 1
     min_y = 2
     max_x = grid_width - 2
     max_y = grid_height - 2
 
-    # Kiểm tra va chạm với tường mới
+    # Kiểm tra va chạm
     if not (min_x <= new_head_x <= max_x and min_y <= new_head_y <= max_y):
-        return False  # Game Over
+        return False
 
     body_coords_to_check = game_state.snake_coords[:-1]
     if new_head_x == game_state.snake_coords[1][0] and new_head_y == game_state.snake_coords[1][1] and len(
