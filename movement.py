@@ -14,31 +14,57 @@ current_dir = "right"  # hướng ban đầu
 
 def set_direction(new_dir):
     global current_dir
-    # ❌ Nếu chưa start game thì không đổi hướng
-    if not game_state.GAME_STARTED:
+    if not game_state.GAME_STARTED or game_state.GAME_OVER:
         return
 
-    if not game_state.DIRECTION_LOCKED:
-        dx, dy = directions[current_dir]
-        ndx, ndy = directions[new_dir]
-        if (dx + ndx, dy + ndy) != (0, 0):  # không cho quay ngược
-            current_dir = new_dir
-            game_state.DIRECTION_LOCKED = True  # Khóa hướng ngay sau khi đổi
+    # Khóa đổi hướng 
+    if game_state.DIRECTION_LOCKED:
+        return
 
-            if game_state.GAME_PAUSED:
-                game_state.GAME_PAUSED = False
+    # Không cho quay ngược
+    dx, dy = directions[current_dir]
+    ndx, ndy = directions[new_dir]
+    if (dx + ndx, dy + ndy) == (0, 0):
+        return
+
+    if not game_state.snake_coords:
+        return
+
+    head_x, head_y = game_state.snake_coords[0]
+    predicted_head = (head_x + ndx, head_y + ndy)
+
+    # Lấy ranh giới
+    do_dai = game_state.do_dai or config.do_dai
+    grid_width = game_state.WIDTH // do_dai
+    grid_height = game_state.HEIGHT // do_dai
+    min_x, min_y = 1, 2
+    max_x, max_y = grid_width - 2, grid_height - 2
+
+    if not (min_x <= predicted_head[0] <= max_x and min_y <= predicted_head[1] <= max_y):
+        game_state.GAME_OVER = True
+        return
+
+    if predicted_head in game_state.snake_coords:
+        game_state.GAME_OVER = True
+        return
+
+    current_dir = new_dir
+    game_state.DIRECTION_LOCKED = True
+
+    if game_state.GAME_PAUSED:
+        game_state.GAME_PAUSED = False
 
 
-def bind_keys(canvas):
-    """Gán phím điều khiển trực tiếp cho canvas."""
-    canvas.bind("<Up>", lambda e: set_direction("up"))
-    canvas.bind("<Down>", lambda e: set_direction("down"))
-    canvas.bind("<Left>", lambda e: set_direction("left"))
-    canvas.bind("<Right>", lambda e: set_direction("right"))
-    canvas.bind("w", lambda e: set_direction("up"))
-    canvas.bind("s", lambda e: set_direction("down"))
-    canvas.bind("a", lambda e: set_direction("left"))
-    canvas.bind("d", lambda e: set_direction("right"))
+def bind_keys(root):
+    """Gán phím điều khiển."""
+    root.bind("<Up>", lambda e: set_direction("up"))
+    root.bind("<Down>", lambda e: set_direction("down"))
+    root.bind("<Left>", lambda e: set_direction("left"))
+    root.bind("<Right>", lambda e: set_direction("right"))
+    root.bind("w", lambda e: set_direction("up"))
+    root.bind("s", lambda e: set_direction("down"))
+    root.bind("a", lambda e: set_direction("left"))
+    root.bind("d", lambda e: set_direction("right"))
 
 
 def _get_direction(p1, p2):
@@ -84,6 +110,7 @@ def _redraw_snake(skin):
             elif prev[1] == nxt[1]:
                 img_pil = skin["body"]["horizontal"]
             else:
+                # Trường hợp góc
                 if ((prev[0] < x and nxt[1] < y) or (nxt[0] < x and prev[1] < y)):
                     key = "topleft"
                 elif ((prev[0] < x and nxt[1] > y) or (nxt[0] < x and prev[1] > y)):
@@ -94,6 +121,7 @@ def _redraw_snake(skin):
                     key = "bottomright"
                 else:
                     key = "horizontal"
+
                 img_pil = skin["body"][key]
 
         img = character.get_photoimage(img_pil.resize((do_dai, do_dai)))
@@ -121,27 +149,27 @@ def move_snake(skin, grow=False):
     grid_width = game_state.WIDTH // do_dai
     grid_height = game_state.HEIGHT // do_dai
 
-    # Ranh giới sân chơi
+    # Ranh giới của sân chơi
     min_x = 1
     min_y = 2
     max_x = grid_width - 2
     max_y = grid_height - 2
 
-    # Kiểm tra va chạm
+    # Kiểm tra va chạm với tường
     if not (min_x <= new_head_x <= max_x and min_y <= new_head_y <= max_y):
-        return False
+        return False  # Game Over
 
+    # Kiểm tra va chạm với thân
     body_coords_to_check = game_state.snake_coords[:-1]
-    if new_head_x == game_state.snake_coords[1][0] and new_head_y == game_state.snake_coords[1][1] and len(
-            game_state.snake_coords) > 1 and not grow:
-        pass
-    elif (new_head_x, new_head_y) in body_coords_to_check:
+    if (new_head_x, new_head_y) in body_coords_to_check:
         return False
 
+    # Cập nhật tọa độ rắn
     game_state.snake_coords.insert(0, (new_head_x, new_head_y))
-
     if not grow:
         game_state.snake_coords.pop()
+
     _redraw_snake(skin)
     game_state.DIRECTION_LOCKED = False
     return True
+
