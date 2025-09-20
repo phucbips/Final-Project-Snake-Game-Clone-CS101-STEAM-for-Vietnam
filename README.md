@@ -81,6 +81,14 @@ Làm quen với quy trình phát triển phần mềm từ ý tưởng → code 
 - 🐍 **Rắn** – [Google Snake Game](https://www.spriters-resource.com/browser_games/googlesnakegame/)  
   Tác giả: [Ya Block](https://www.spriters-resource.com/profile/YaBlock)
 
+
 - 🍎 **Quả táo** – [Google Snake Game](https://www.spriters-resource.com/browser_games/googlesnakegame/)  
   Tác giả: [FridayFunkGaming291](https://www.spriters-resource.com/profile/FridayFunkGaming291)
+
+
+
+## 🎁 Secret Link
+
+
+[Click để xem điều bí mật 😏](https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1)
 
