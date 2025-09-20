@@ -61,11 +61,12 @@ Dự án này giúp chúng em:
 Hiểu hơn về lập trình với Ai
 
 Làm quen với quy trình phát triển phần mềm từ ý tưởng → code → test → đóng gói → publish
-## Credit
-🐍 Rắn & 🍎 Quả táo – Google Snake Game
 
-Nguồn: The Spriters Resource – Google Snake Game
+## 🏷️ Credit
 
-Tác giả: [Ya Block](https://www.spriters-resource.com/profile/YaBlock) (snake)
+- 🐍 **Rắn** – [Google Snake Game](https://www.spriters-resource.com/browser_games/googlesnakegame/)  
+  Tác giả: [Ya Block](https://www.spriters-resource.com/profile/YaBlock)
 
-Tác giả: [FridayFunkGaming291](https://www.spriters-resource.com/profile/FridayFunkGaming291) (apple)
+- 🍎 **Quả táo** – [Google Snake Game](https://www.spriters-resource.com/browser_games/googlesnakegame/)  
+  Tác giả: [FridayFunkGaming291](https://www.spriters-resource.com/profile/FridayFunkGaming291)
+
