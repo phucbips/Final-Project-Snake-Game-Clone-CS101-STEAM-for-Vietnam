@@ -78,6 +78,8 @@ Làm quen với quy trình phát triển phần mềm từ ý tưởng → code 
 
 
 ## 🎬 Video giới thiệu dự án
+-Xem video giới thiệu dự án tại đây:
+
 [![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white)](https://youtu.be/2_JXBwi9SWY)
 
 
