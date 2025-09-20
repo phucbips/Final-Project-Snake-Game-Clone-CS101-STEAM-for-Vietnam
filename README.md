@@ -38,6 +38,7 @@ tải file code về rồi chạy main.py thoiiiii =)))))))
 🖼️ Menu chính
 
 
+<img width="874" height="700" alt="image" src="https://github.com/user-attachments/assets/ccc27268-7096-4557-b03c-7ece8e64c08d" />
 
 
 
@@ -47,6 +48,7 @@ tải file code về rồi chạy main.py thoiiiii =)))))))
 
 
 
+<img width="879" height="697" alt="image" src="https://github.com/user-attachments/assets/acd65dce-dc95-42a0-8523-48582cfc5de9" />
 
 
 
@@ -57,6 +59,6 @@ Dự án này giúp chúng em:
 
 Ôn tập Python cơ bản & nâng cao
 
-Hiểu hơn về lập trình sự kiện (event-driven)
+Hiểu hơn về lập trình với Ai
 
 Làm quen với quy trình phát triển phần mềm từ ý tưởng → code → test → đóng gói → publish
