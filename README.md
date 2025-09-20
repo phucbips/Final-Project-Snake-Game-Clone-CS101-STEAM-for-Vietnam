@@ -26,6 +26,12 @@ Trò chơi kết thúc khi rắn va vào chính nó hoặc chạm tường.
 
 ---
 
+## ⬇️ Download
+
+- Tải toàn bộ project: [Tải Xuống!](https://transfer.it/t/wRNBUB9X2DwC)
+
+
+---
 ## ▶️ Cách chạy project  
 tải file code về rồi chạy main.py thoiiiii =)))))))
 
