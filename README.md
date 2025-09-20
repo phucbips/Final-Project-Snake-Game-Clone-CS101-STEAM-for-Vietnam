@@ -62,7 +62,7 @@ Hiểu hơn về lập trình với Ai
 
 Làm quen với quy trình phát triển phần mềm từ ý tưởng → code → test → đóng gói → publish
 ## Credit
-# 🐍 Rắn & 🍎 Quả táo – Google Snake Game
+🐍 Rắn & 🍎 Quả táo – Google Snake Game
 
 Nguồn: The Spriters Resource – Google Snake Game
 
