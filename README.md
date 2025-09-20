@@ -28,7 +28,7 @@ Trò chơi kết thúc khi rắn va vào chính nó hoặc chạm tường.
 
 ## ⬇️ Download
 
-- Tải toàn bộ project: [Tải Xuống!](https://transfer.it/t/wRNBUB9X2DwC)
+- Tải toàn bộ project: [Download 7Zip!](https://transfer.it/t/wRNBUB9X2DwC)
 
 
 ---
