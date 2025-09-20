@@ -76,6 +76,12 @@ Làm quen với quy trình phát triển phần mềm từ ý tưởng → code 
 
 ---
 
+
+## 🎬 Video giới thiệu dự án
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white)](https://youtu.be/2_JXBwi9SWY)
+
+
+---
 ## 🏷️ Credit
 
 - 🐍 **Rắn** – [Google Snake Game](https://www.spriters-resource.com/browser_games/googlesnakegame/)  
