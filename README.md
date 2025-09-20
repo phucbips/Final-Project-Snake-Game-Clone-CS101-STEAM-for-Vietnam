@@ -28,7 +28,9 @@ Trò chơi kết thúc khi rắn va vào chính nó hoặc chạm tường.
 
 ## ⬇️ Download
 
-- Tải toàn bộ project: [Download 7Zip](https://transfer.it/t/wRNBUB9X2DwC)
+- Tải toàn bộ project:
+[Download 7ZIP](https://github.com/phucbips/Final-Project-Snake-Game-Clone-CS101-STEAM-for-Vietnam/archive/refs/heads/main.zip) 
+
 
 
 ---
