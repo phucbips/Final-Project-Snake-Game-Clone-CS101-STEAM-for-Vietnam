@@ -23,7 +23,6 @@ Trò chơi kết thúc khi rắn va vào chính nó hoặc chạm tường.
 - **Python 3.13**  
 - **Tkinter** (GUI)  
 - **Pillow** (xử lý ảnh)  
-- **PyInstaller** (đóng gói thành file `.exe`)  
 
 ---
 
